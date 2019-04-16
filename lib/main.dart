@@ -8,7 +8,7 @@ void main() async{
   for(var i = 0; i < _data.length; i++) {
     print("Data: ${_data[i] ["title"]}");
   }
-//adding to gitHub 
+
 
     runApp(new MaterialApp(
       home:new Scaffold(
@@ -30,17 +30,19 @@ void main() async{
                         fontSize: 16.5,
                         fontWeight: FontWeight.bold,
                       )),
-                      subtitle: Text(_data[position]["body"],
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 10.5
-                      ),),
+
+//                     // this is for the body of text for JSON paring
+//                      subtitle: Text(_data[position]["body"],
+//                      style: TextStyle(
+//                        fontWeight: FontWeight.bold,
+//                        fontSize: 10.5
+//                      ),),
 
                       leading: CircleAvatar(
                         backgroundColor: Colors.grey,
                         child: Text(_data[position]["title"][0]),
                       ),
-
+                      onTap: () => showTapMessage(context, _data[position]["body"]),
                     ),
                   ],
                 );
@@ -49,7 +51,20 @@ void main() async{
       )
     ));
 }
-
+void showTapMessage(BuildContext context, String message){
+    var alertDialog = new AlertDialog(
+      title: Text(message),
+      actions: <Widget>[
+        FlatButton(
+          onPressed: () => Navigator.of(context).pop(),
+          child: Text("ok"),
+        ),
+      ],
+    );
+        showDialog(context: context, builder:( context){
+          return alertDialog;
+        });
+}
 Future<List> getJSON() async{
     String apiUrl = "https://jsonplaceholder.typicode.com/posts";
 
